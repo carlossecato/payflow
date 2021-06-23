@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:payflow/shared/app_text_style.dart';
 import 'package:payflow/shared/social_login/social_login_button.dart';
 import 'package:payflow/shared/themes/app_images.dart';
@@ -57,11 +58,19 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 40, right: 40, top: 40),
-                    child: SocialLoginButton(
-                      onTap: () {
-                        print("clickou");
-                      },
-                    ),
+                    child: SocialLoginButton(onTap: () async {
+                      GoogleSignIn _googleSignIn = GoogleSignIn(
+                        scopes: [
+                          'email',
+                        ],
+                      );
+                      try {
+                        final response = await _googleSignIn.signIn();
+                        print(response);
+                      } catch (error) {
+                        print(error);
+                      }
+                    }),
                   )
                 ],
               ),
